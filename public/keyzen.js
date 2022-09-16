@@ -34,7 +34,7 @@ function set_level(l) {
 
 
 function onKeyEvent(e) {
-    if (e.type === 'keyup') {
+    if (e.type === 'keyup' && e.key === 'Dead') {
         // check if it is a dead key
         let key = getSpecialKeyFromCode(e);
         if (data.chars.indexOf(key) > -1){
