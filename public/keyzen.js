@@ -1,5 +1,5 @@
 var data = {};
-data.chars = " ntesiroahdjglpufywqbkvmcxz1234567890'\",.!?:;/@$%&#*()_ABCDEFGHIJKLMNOPQRSTUVWXYZ~+-={}|^<>`[]\\";
+data.chars = " ntesiroahdjglpufywqbkvmcxz1234567890'\",.!?:;/@$%&#*()_ABCDEFGHIJKLMNOPQRSTUVWXYZ~+-={}|^<>´`[]\\";
 data.consecutive = 10;
 data.word_length = 7;
 
@@ -12,7 +12,8 @@ $(document).ready(function() {
     else {
         set_level(1);
     }
-    $(document).keypress(keyHandler);
+    $(document).on('keyup', onKeyEvent);
+    $(document).on('keypress', onKeyEvent);
 });
 
 
@@ -32,11 +33,35 @@ function set_level(l) {
 }
 
 
-function keyHandler(e) {
-    var key = String.fromCharCode(e.which);
-    if (data.chars.indexOf(key) > -1){
-        e.preventDefault();
+function onKeyEvent(e) {
+    if (e.type === 'keyup') {
+        // check if it is a dead key
+        let key = getSpecialKeyFromCode(e);
+        if (data.chars.indexOf(key) > -1){
+            keyHandler(key);
+        }
+    } else if (e.type === 'keypress') {
+        // normal flow
+        let key = String.fromCharCode(e.which);
+        if (data.chars.indexOf(key) > -1){
+            e.preventDefault();
+        }
+        keyHandler(key);
     }
+}
+
+function getSpecialKeyFromCode(e) {
+    var speclaiKeys = [
+        { code: 222, shiftKey: false, char: "~" },
+        { code: 222, shiftKey: true, char: "^" },
+        { code: 221, shiftKey: false, char: "´" },
+        { code: 221, shiftKey: true, char: "`" },
+    ];
+    var key = speclaiKeys.find((k) => k.code === e.which && e.shiftKey === k.shiftKey);
+    return key?.char ?? null;
+}
+
+function keyHandler(key) {
     data.keys_hit += key;
     if(key == data.word[data.word_index]) {
         data.in_a_row[key] += 1;
