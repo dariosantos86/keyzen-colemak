@@ -1,5 +1,5 @@
 var data = {};
-data.chars = " ntesiroahdjglpufywqbkvmcxz1234567890'\",.!?:;/@$%&#*()_ABCDEFGHIJKLMNOPQRSTUVWXYZ~+-={}|^<>´`[]\\";
+data.chars = " ntesiroahdjglpufywqbkvmcxzç1234567890'\",.!?:;/@$%&#*()_ABCDEFGHIJKLMNOPQRSTUVWXYZÇ€~+-={}|^<>´`[]\\";
 data.consecutive = 10;
 data.word_length = 7;
 
